@@ -119,7 +119,7 @@ DATABASES = {
         'NAME': 'qappdb',
         'USER': 'qappuser',
         'PASSWORD': 'qapppass',
-        'HOST': '172.17.0.1',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
