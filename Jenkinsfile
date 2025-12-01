@@ -38,7 +38,7 @@ pipeline {
 
                 docker pull meghana1724/qapp:latest
 
-                docker run -d --name qapp -p 8007:8007 meghana1724/qapp:latest
+                docker run -d --name qapp -p 8000:8000 meghana1724/qapp:latest
                 '''
             }
         }
