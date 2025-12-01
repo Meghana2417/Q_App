@@ -1,0 +1,4229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindSpace - Share Your Thoughts, Find Your Answers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    :root {
+        --primary-color: #FA8072;
+        --primary-light: #FFA89D;
+        --primary-dark: #E66A5C;
+        --secondary-color: #36454F;
+        --secondary-light: #4A5C6A;
+        --secondary-dark: #2A353D;
+        --accent-color: #FF9A76;
+        --success-color: #06D6A0;
+        --warning-color: #FF9E64;
+        --danger-color: #EF476F;
+        --background-color: #1E2A33;
+        --surface-color: #2A3843;
+        --card-color: #36454F;
+        --text-primary: #FFFFFF;
+        --text-secondary: #D1D9E0;
+        --text-light: #A3B2C2;
+        --border-color: #4A5C6A;
+        --shadow-color: rgba(0, 0, 0, 0.4);
+        --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+        --gradient-secondary: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-dark) 100%);
+        --gradient-hero: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--accent-color) 100%);
+        --gradient-card: linear-gradient(135deg, var(--card-color) 0%, #4A5C6A 100%);
+        --gradient-profile: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        --shadow-sm: 0 2px 8px var(--shadow-color);
+        --shadow-md: 0 4px 12px var(--shadow-color);
+        --shadow-lg: 0 10px 25px var(--shadow-color);
+        --shadow-glow: 0 0 15px rgba(250, 128, 114, 0.4);
+        --border-radius: 12px;
+        --border-radius-lg: 20px;
+        --transition: all 0.3s ease;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-primary);
+        line-height: 1.6;
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(250, 128, 114, 0.1) 0%, transparent 20%),
+            radial-gradient(circle at 90% 80%, rgba(54, 69, 79, 0.2) 0%, transparent 20%);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    /* Enhanced Navbar Styling */
+    .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1030;
+        background: var(--surface-color);
+        box-shadow: var(--shadow-md);
+        padding: 0.8rem 0;
+        transition: var(--transition);
+        border-bottom: 1px solid var(--border-color);
+        backdrop-filter: blur(10px);
+    }
+
+    .navbar--scrolled {
+        padding: 0.35rem 0;
+        box-shadow: 0 6px 14px rgba(0,0,0,0.45);
+        background: rgba(42, 56, 67, 0.98);
+        border-bottom-width: 0;
+    }
+
+    .navbar--scrolled .navbar-brand {
+        font-size: 1.25rem;
+    }
+
+    .navbar-brand {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-size: 1.5rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 0;
+        transition: var(--transition);
+    }
+
+    .navbar-brand i {
+        margin-right: 0.5rem;
+        font-size: 1.6rem;
+    }
+
+    .navbar-brand:hover {
+        transform: scale(1.05);
+    }
+
+    .nav-link {
+        font-weight: 500;
+        color: var(--text-secondary) !important;
+        padding: 0.5rem 1rem !important;
+        border-radius: var(--border-radius);
+        transition: var(--transition);
+        margin: 0 0.2rem;
+        position: relative;
+    }
+
+    .nav-link:hover, .nav-link.active {
+        background-color: rgba(250, 128, 114, 0.2);
+        color: var(--primary-color) !important;
+        box-shadow: var(--shadow-glow);
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--gradient-primary);
+        transition: var(--transition);
+        transform: translateX(-50%);
+    }
+
+    .nav-link.active::after {
+        width: 80%;
+    }
+
+    .search-box {
+        border-radius: 50px;
+        border: 1px solid var(--border-color);
+        padding: 0.5rem 1rem;
+        width: 200px;
+        transition: var(--transition);
+        background-color: var(--card-color);
+        color: var(--text-primary);
+    }
+
+    .search-box:focus {
+        width: 250px;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(250, 128, 114, 0.25);
+    }
+
+    .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: var(--danger-color);
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        font-size: 0.7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 5px var(--danger-color);
+    }
+
+    .user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--border-color);
+        transition: var(--transition);
+    }
+
+    .user-avatar:hover {
+        border-color: var(--primary-color);
+        box-shadow: var(--shadow-glow);
+    }
+
+    /* Hero Section */
+    .hero-section {
+        background: var(--gradient-hero);
+        color: var(--text-primary);
+        padding: 5rem 0;
+        text-align: center;
+        margin-bottom: 2rem;
+        border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.1)" points="0,1000 1000,0 1000,1000"/></svg>');
+        background-size: cover;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+        color: var(--text-primary);
+        opacity: 0.9;
+    }
+
+    /* Main Content Layout */
+    .container-main {
+        display: flex;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        gap: 2rem;
+    }
+
+    .sidebar {
+        flex: 0 0 280px;
+    }
+
+    .main-content {
+        flex: 1;
+    }
+
+    @media (max-width: 992px) {
+        .container-main {
+            flex-direction: column;
+        }
+        
+        .sidebar {
+            flex: 1;
+        }
+    }
+
+    /* Sidebar Styling */
+    .section-title {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+    }
+
+    .section-title i {
+        margin-right: 0.5rem;
+        color: var(--primary-color);
+    }
+
+    .categories-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .category-item {
+        padding: 0.8rem 1rem;
+        border-radius: var(--border-radius);
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        color: var(--text-secondary);
+        background-color: var(--card-color);
+        border: 1px solid transparent;
+    }
+
+    .category-item i {
+        margin-right: 0.7rem;
+        width: 20px;
+        text-align: center;
+    }
+
+    .category-item:hover {
+        background-color: rgba(250, 128, 114, 0.2);
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+        transform: translateX(5px);
+    }
+
+    .category-item.active {
+        background: var(--gradient-primary);
+        color: var(--secondary-color);
+        box-shadow: var(--shadow-glow);
+    }
+
+    .post-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .tag {
+        background-color: rgba(250, 128, 114, 0.2);
+        color: var(--primary-color);
+        padding: 0.3rem 0.7rem;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        transition: var(--transition);
+        cursor: pointer;
+        border: 1px solid transparent;
+    }
+
+    .tag:hover {
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-glow);
+    }
+
+    .stats {
+        background: var(--gradient-card);
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-color);
+    }
+
+    .stat {
+        display: flex;
+        align-items: center;
+        color: var(--text-secondary);
+    }
+
+    .stat i {
+        margin-right: 0.7rem;
+        color: var(--primary-color);
+        width: 20px;
+        text-align: center;
+    }
+
+    /* Feed Filters */
+    .feed-filters {
+        background: var(--gradient-card);
+        padding: 1rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-color);
+    }
+
+    .btn-outline-primary {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        background: transparent;
+    }
+
+    .btn-outline-primary:hover, .btn-outline-primary.active {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        color: var(--secondary-color);
+        box-shadow: var(--shadow-glow);
+    }
+
+    /* Create Post Section */
+    .create-post {
+        background: var(--gradient-card);
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-md);
+        margin-bottom: 2rem;
+        border: 1px solid var(--border-color);
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .user-info .user-avatar {
+        width: 48px;
+        height: 48px;
+        margin-right: 1rem;
+    }
+
+    .username {
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    .post-time {
+        font-size: 0.85rem;
+        color: var(--text-light);
+    }
+
+    /* Post Cards */
+    .post-card {
+        border: none;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-md);
+        margin-bottom: 1.5rem;
+        transition: var(--transition);
+        overflow: hidden;
+        background: var(--gradient-card);
+        border: 1px solid var(--border-color);
+    }
+
+    .post-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--primary-color);
+    }
+
+    .post-card .card-header {
+        background: var(--gradient-card);
+        border-bottom: 1px solid var(--border-color);
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .post-card .card-body {
+        padding: 1.5rem;
+    }
+
+    .post-title {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+    }
+
+    .post-content {
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+        line-height: 1.7;
+    }
+
+    .badge {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.6rem;
+        border-radius: 50px;
+        font-weight: 500;
+    }
+
+    .badge-anonymous {
+        background-color: var(--border-color);
+        color: var(--text-secondary);
+    }
+
+    .badge-expert {
+        background: var(--gradient-primary);
+        color: var(--secondary-color);
+    }
+
+    .badge-trending {
+        background-color: var(--accent-color);
+        color: white;
+    }
+
+    /* Post Stats and Actions */
+    .post-stats {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .vote-buttons {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .vote-btn {
+        background: none;
+        border: none;
+        color: var(--text-light);
+        font-size: 1.2rem;
+        padding: 0.3rem;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+    }
+
+    .vote-btn:hover {
+        background-color: rgba(250, 128, 114, 0.2);
+    }
+
+    .upvote-btn.active {
+        color: var(--success-color);
+        text-shadow: 0 0 5px var(--success-color);
+    }
+
+    .downvote-btn.active {
+        color: var(--danger-color);
+        text-shadow: 0 0 5px var(--danger-color);
+    }
+
+    .vote-count {
+        font-weight: 600;
+        color: var(--text-primary);
+        min-width: 30px;
+        text-align: center;
+    }
+
+    .stat {
+        display: flex;
+        align-items: center;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    .stat i {
+        margin-right: 0.5rem;
+    }
+
+    /* Comments Section */
+    .comments-section {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .comment {
+        display: flex;
+        margin-bottom: 1.5rem;
+    }
+
+    .comment-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 1rem;
+        flex-shrink: 0;
+    }
+
+    .comment-content {
+        flex: 1;
+    }
+
+    .comment-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+
+    .comment-author {
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    .comment-time {
+        font-size: 0.8rem;
+        color: var(--text-light);
+    }
+
+    .comment-text {
+        color: var(--text-secondary);
+        margin-bottom: 0.8rem;
+    }
+
+    .comment-actions {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .comment-action {
+        background: none;
+        border: none;
+        color: var(--text-light);
+        font-size: 0.85rem;
+        transition: var(--transition);
+        padding: 0.2rem 0.5rem;
+        border-radius: var(--border-radius);
+    }
+
+    .comment-action:hover, .comment-action.active {
+        color: var(--primary-color);
+        background-color: rgba(250, 128, 114, 0.2);
+    }
+
+    /* Poll Section */
+    .poll-section {
+        background: var(--gradient-secondary);
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        margin: 1.5rem 0;
+        border: 1px solid var(--border-color);
+    }
+
+    .poll-options {
+        margin: 1rem 0;
+    }
+
+    .poll-option {
+        margin-bottom: 0.8rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .poll-option input {
+        margin-right: 0.8rem;
+    }
+
+    .poll-option label {
+        cursor: pointer;
+        color: var(--text-primary);
+    }
+
+    /* Buttons */
+    .btn-primary {
+        background: var(--gradient-primary);
+        border: none;
+        border-radius: var(--border-radius);
+        padding: 0.6rem 1.5rem;
+        font-weight: 500;
+        transition: var(--transition);
+        color: var(--secondary-color);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-glow);
+    }
+
+    .btn-outline-primary {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        border-radius: var(--border-radius);
+        padding: 0.6rem 1.5rem;
+        font-weight: 500;
+        transition: var(--transition);
+        background: transparent;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-glow);
+    }
+
+    /* Modals */
+    .modal-content {
+        border: none;
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-lg);
+        background: var(--gradient-card);
+        border: 1px solid var(--border-color);
+    }
+
+    .modal-header {
+        border-bottom: 1px solid var(--border-color);
+        padding: 1.5rem;
+    }
+
+    .modal-body {
+        padding: 1.5rem;
+    }
+
+    .modal-footer {
+        border-top: 1px solid var(--border-color);
+        padding: 1.5rem;
+    }
+
+    .form-control, .form-select {
+        border-radius: var(--border-radius);
+        border: 1px solid var(--border-color);
+        padding: 0.75rem 1rem;
+        transition: var(--transition);
+        background-color: var(--surface-color);
+        color: var(--text-primary);
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(250, 128, 114, 0.25);
+        background-color: var(--card-color);
+    }
+
+    .form-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1.5rem;
+    }
+
+    .option-checkbox {
+        display: flex;
+        align-items: center;
+        color: var(--text-secondary);
+    }
+
+    .option-checkbox input {
+        margin-right: 0.5rem;
+    }
+
+    /* Footer */
+    .footer {
+        background: var(--gradient-secondary);
+        color: var(--text-primary);
+        padding: 3rem 0 2rem;
+        margin-top: 4rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .footer-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .footer-link:hover {
+        color: var(--primary-color);
+    }
+
+    .copyright {
+        text-align: center;
+        color: var(--text-light);
+        font-size: 0.9rem;
+    }
+
+    /* Explore Page Cards */
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--gradient-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: var(--secondary-color);
+        font-size: 2rem;
+        box-shadow: var(--shadow-glow);
+    }
+
+    .card {
+        border: none;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-md);
+        transition: var(--transition);
+        overflow: hidden;
+        background: var(--gradient-card);
+        border: 1px solid var(--border-color);
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--primary-color);
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+
+    /* Profile Page Styling */
+    .profile-header {
+        background: var(--gradient-profile);
+        padding: 3rem 0;
+        border-radius: var(--border-radius-lg);
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .profile-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><circle fill="rgba(255,255,255,0.1)" cx="500" cy="500" r="400"/></svg>');
+        background-size: cover;
+    }
+
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid var(--secondary-color);
+        box-shadow: var(--shadow-lg);
+        margin-bottom: 1rem;
+    }
+
+    .profile-stats {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-top: 1.5rem;
+    }
+
+    .profile-stat {
+        text-align: center;
+    }
+
+    .profile-stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--secondary-color);
+        display: block;
+    }
+
+    .profile-stat-label {
+        color: var(--secondary-color);
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+
+    .activity-timeline {
+        margin-top: 2rem;
+    }
+
+    .timeline-item {
+        display: flex;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: var(--gradient-card);
+        border-radius: var(--border-radius);
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .timeline-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--gradient-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        color: var(--secondary-color);
+    }
+
+    .timeline-content {
+        flex: 1;
+    }
+
+    .timeline-title {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+    }
+
+    .timeline-date {
+        color: var(--text-light);
+        font-size: 0.85rem;
+    }
+
+    /* Saved Posts */
+    .saved-post-card {
+        background: var(--gradient-card);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        border: 1px solid var(--border-color);
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .saved-post-card:hover {
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary-color);
+        transform: translateX(5px);
+    }
+
+    /* About Section */
+    .about-section {
+        padding: 4rem 0;
+    }
+
+    /* Alert Styling */
+    .alert {
+        border: none;
+        border-radius: var(--border-radius);
+        padding: 1rem 1.5rem;
+    }
+
+    /* Loading Spinner */
+    .spinner-border {
+        color: var(--primary-color);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.2rem;
+        }
+        
+        .post-stats {
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .form-options {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .footer-links {
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .profile-stats {
+            flex-direction: column;
+            gap: 1rem;
+        }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--surface-color);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-light);
+    }
+
+    /* Login and Signup Pages */
+    .auth-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1rem;
+        background: var(--gradient-hero);
+    }
+
+    .auth-card {
+        background: var(--gradient-card);
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--border-color);
+        overflow: hidden;
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .auth-header {
+        background: var(--gradient-primary);
+        padding: 2rem;
+        text-align: center;
+        color: var(--secondary-color);
+    }
+
+    .auth-body {
+        padding: 2rem;
+    }
+
+    .auth-footer {
+        padding: 1.5rem 2rem;
+        border-top: 1px solid var(--border-color);
+        text-align: center;
+        background: var(--surface-color);
+    }
+
+    .auth-footer a {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .auth-footer a:hover {
+        text-decoration: underline;
+    }
+
+    .form-label {
+        color: var(--text-primary);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-check-label {
+        color: var(--text-secondary);
+    }
+
+    .form-divider {
+        display: flex;
+        align-items: center;
+        margin: 1.5rem 0;
+        color: var(--text-light);
+    }
+
+    .form-divider::before,
+    .form-divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .form-divider span {
+        padding: 0 1rem;
+    }
+
+    /* My Journey Page */
+    .journey-header {
+        background: var(--gradient-hero);
+        padding: 3rem 0;
+        text-align: center;
+        margin-bottom: 2rem;
+        border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .journey-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><path fill="rgba(255,255,255,0.1)" d="M0,500 C150,400 350,600 500,500 C650,400 850,600 1000,500 L1000,1000 L0,1000 Z"/></svg>');
+        background-size: cover;
+    }
+
+    .journey-form-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .journey-form {
+        background: var(--gradient-card);
+        border-radius: var(--border-radius-lg);
+        padding: 2rem;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--border-color);
+    }
+
+    .form-section {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .form-section:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .form-section-title {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+    }
+
+    .form-section-title i {
+        margin-right: 0.7rem;
+    }
+
+    .journey-timeline {
+        margin-top: 2rem;
+    }
+
+    .timeline-step {
+        display: flex;
+        margin-bottom: 1.5rem;
+        align-items: flex-start;
+    }
+
+    .timeline-step-number {
+        width: 40px;
+        height: 40px;
+        background: var(--gradient-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        color: var(--secondary-color);
+        font-weight: 600;
+        flex-shrink: 0;
+    }
+
+    .timeline-step-content {
+        flex: 1;
+    }
+
+    .timeline-step-title {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+    }
+
+    .timeline-step-description {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    /* Journey Cards */
+    .journey-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .journey-card {
+        background: var(--gradient-card);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-color);
+        transition: var(--transition);
+    }
+
+    .journey-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--primary-color);
+    }
+
+    .journey-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+    }
+
+    .journey-card-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    .journey-card-date {
+        color: var(--text-light);
+        font-size: 0.85rem;
+    }
+
+    .journey-card-content {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+    }
+
+    .journey-card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .journey-card-tag {
+        background-color: rgba(250, 128, 114, 0.2);
+        color: var(--primary-color);
+        padding: 0.2rem 0.6rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+    }
+
+    /* Discussion Rooms Styling */
+    .rooms-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .room-card {
+        background: var(--gradient-card);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-color);
+        transition: var(--transition);
+        cursor: pointer;
+    }
+
+    .room-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--primary-color);
+    }
+
+    .room-icon {
+        width: 60px;
+        height: 60px;
+        background: var(--gradient-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        color: var(--secondary-color);
+        font-size: 1.5rem;
+    }
+
+    .room-stats {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .room-stat {
+        text-align: center;
+    }
+
+    .room-stat-value {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .room-stat-label {
+        font-size: 0.8rem;
+        color: var(--text-light);
+    }
+
+    /* Discussion Room Page - WhatsApp Style Chat */
+    .room-header {
+        background: var(--gradient-hero);
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .room-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.1)" points="0,1000 1000,0 1000,1000"/></svg>');
+        background-size: cover;
+    }
+
+    .room-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    /* WhatsApp Style Chat Container */
+    .chat-container {
+        display: flex;
+        flex-direction: column;
+        height: 70vh;
+        background: var(--card-color);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-color);
+        overflow: hidden;
+    }
+
+    .chat-header {
+        background: var(--surface-color);
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .chat-header-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .chat-header-actions {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .chat-messages {
+        flex: 1;
+        padding: 1.5rem;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* WhatsApp Style Message Bubbles */
+    .message {
+        display: flex;
+        max-width: 70%;
+    }
+
+    .message.received {
+        align-self: flex-start;
+    }
+
+    .message.sent {
+        align-self: flex-end;
+    }
+
+    .message-bubble {
+        padding: 0.8rem 1.2rem;
+        border-radius: 1.5rem;
+        position: relative;
+        word-wrap: break-word;
+    }
+
+    .message.received .message-bubble {
+        background: var(--surface-color);
+        border-bottom-left-radius: 0.5rem;
+        color: var(--text-primary);
+    }
+
+    .message.sent .message-bubble {
+        background: var(--gradient-primary);
+        border-bottom-right-radius: 0.5rem;
+        color: var(--secondary-color);
+    }
+
+    .message-info {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.3rem;
+        font-size: 0.75rem;
+        opacity: 0.7;
+    }
+
+    .chat-input {
+        padding: 1rem 1.5rem;
+        background: var(--surface-color);
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .chat-input input {
+        flex: 1;
+        border-radius: 2rem;
+        padding: 0.8rem 1.2rem;
+        border: 1px solid var(--border-color);
+        background: var(--card-color);
+        color: var(--text-primary);
+    }
+
+    .chat-input input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+    }
+
+    .send-btn {
+        background: var(--gradient-primary);
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--secondary-color);
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .send-btn:hover {
+        transform: scale(1.1);
+        box-shadow: var(--shadow-glow);
+    }
+
+    /* Reminder Feature */
+    .reminder-badge {
+        background-color: var(--warning-color);
+        color: var(--secondary-color);
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+        border-radius: 50px;
+        margin-left: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .reminder-section {
+        background: var(--gradient-secondary);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid var(--border-color);
+    }
+
+    .reminder-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background: var(--card-color);
+        border-radius: var(--border-radius);
+        margin-bottom: 0.8rem;
+        border-left: 4px solid var(--warning-color);
+    }
+
+    .reminder-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .reminder-info {
+        flex: 1;
+    }
+
+    .reminder-title {
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+    }
+
+    .reminder-time {
+        font-size: 0.85rem;
+        color: var(--text-light);
+    }
+
+    .reminder-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    /* Join Button Styling */
+    .join-btn {
+        background: var(--success-color);
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .join-btn:hover {
+        background: #05c28f;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(6, 214, 160, 0.4);
+    }
+
+    .join-btn.joined {
+        background: var(--border-color);
+        color: var(--text-secondary);
+    }
+
+    .join-btn.joined:hover {
+        background: var(--border-color);
+        transform: none;
+        box-shadow: none;
+    }
+
+    /* Back to Home Button */
+    .back-home-btn {
+        background: var(--gradient-primary);
+        color: var(--secondary-color);
+        border: none;
+        border-radius: var(--border-radius);
+        padding: 0.6rem 1.5rem;
+        font-weight: 500;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+    }
+
+    .back-home-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-glow);
+        color: var(--secondary-color);
+    }
+
+    /* Room Creation Form Styling */
+    .room-form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .room-form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+
+    .reminder-options {
+        background: var(--surface-color);
+        border-radius: var(--border-radius);
+        padding: 1rem;
+        margin-top: 1rem;
+        border: 1px solid var(--border-color);
+    }
+
+    .reminder-option {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.8rem;
+    }
+
+    .reminder-option:last-child {
+        margin-bottom: 0;
+    }
+
+    .reminder-option input {
+        margin-right: 0.8rem;
+    }
+
+    .reminder-option label {
+        color: var(--text-secondary);
+        cursor: pointer;
+    }
+
+    .reminder-option.active label {
+        color: var(--primary-color);
+    }
+    .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1030;
+        background: var(--surface-color);
+        box-shadow: var(--shadow-md);
+        padding: 0.4rem 0;
+        transition: var(--transition);
+        border-bottom: 1px solid var(--border-color);
+        backdrop-filter: blur(10px);
+        min-height: 60px;
+    }
+
+    .navbar--scrolled {
+        padding: 0.2rem 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.45);
+        background: rgba(42, 56, 67, 0.98);
+    }
+
+    .navbar-brand {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-size: 1.3rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        display: flex;
+        align-items: center;
+        margin-right: 2rem;
+    }
+
+    .navbar-brand i {
+        margin-right: 0.4rem;
+        font-size: 1.4rem;
+    }
+
+    .navbar-nav {
+        display: flex;
+        flex-direction: row !important;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .nav-link {
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: var(--text-secondary) !important;
+        padding: 0.4rem 0.8rem !important;
+        border-radius: var(--border-radius);
+        transition: var(--transition);
+        margin: 0 0.1rem;
+        position: relative;
+        white-space: nowrap;
+    }
+
+    .nav-link:hover, .nav-link.active {
+        background-color: rgba(250, 128, 114, 0.2);
+        color: var(--primary-color) !important;
+        box-shadow: var(--shadow-glow);
+    }
+
+    .navbar-collapse {
+        flex-grow: 0;
+    }
+
+    /* Auth buttons in navbar */
+    #auth-buttons {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-left: 0.8rem;
+    }
+
+    #auth-buttons .btn {
+        border-radius: 999px;
+        padding: 0.45rem 0.9rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+        box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    }
+
+    #auth-buttons .btn-primary {
+        background: var(--gradient-primary);
+        border: none;
+        color: var(--secondary-color);
+    }
+
+    #auth-buttons .btn-outline-primary {
+        border: 1px solid rgba(250,128,114,0.9);
+        color: rgba(250,128,114,0.95);
+        background: transparent;
+    }
+
+    @media (max-width: 576px) {
+        #auth-buttons { gap: 0.4rem; }
+        #auth-buttons .btn { padding: 0.35rem 0.6rem; font-size: 0.85rem; }
+        .search-box { display: none; }
+    }
+
+    .navbar-toggler {
+        border: none;
+        padding: 0.2rem 0.4rem;
+        font-size: 0.9rem;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+    .navbar-toggler-icon {
+        width: 1.2em;
+        height: 1.2em;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28250, 128, 114, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    .search-box {
+        border-radius: 50px;
+        border: 1px solid var(--border-color);
+        padding: 0.4rem 0.8rem;
+        width: 180px;
+        font-size: 0.85rem;
+        transition: var(--transition);
+        background-color: var(--card-color);
+        color: var(--text-primary);
+        margin: 0 0.8rem;
+        height: 36px;
+    }
+
+    .search-box:focus {
+        width: 200px;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(250, 128, 114, 0.25);
+    }
+
+    .notification-badge {
+        position: absolute;
+        top: -3px;
+        right: -3px;
+        background: var(--danger-color);
+        color: white;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        font-size: 0.65rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 4px var(--danger-color);
+    }
+
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--border-color);
+        transition: var(--transition);
+    }
+
+    .user-avatar:hover {
+        border-color: var(--primary-color);
+        box-shadow: var(--shadow-glow);
+    }
+
+    .nav-item.dropdown {
+        position: relative;
+    }
+
+    .dropdown-menu {
+        border: none;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-md);
+        background: var(--gradient-card);
+        border: 1px solid var(--border-color);
+        font-size: 0.9rem;
+    }
+
+    .dropdown-item {
+        color: var(--text-secondary);
+        padding: 0.4rem 0.8rem;
+        transition: var(--transition);
+        font-size: 0.85rem;
+    }
+
+    .dropdown-item:hover {
+        background-color: rgba(250, 128, 114, 0.2);
+        color: var(--primary-color);
+    }
+
+    /* Auth buttons - Compact and arranged */
+    .auth-buttons-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-left: 0.8rem;
+    }
+
+    .btn-outline-primary {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        border-radius: var(--border-radius);
+        padding: 0.35rem 0.8rem;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: var(--transition);
+        background: transparent;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-glow);
+    }
+
+    .btn-primary {
+        background: var(--gradient-primary);
+        border: none;
+        border-radius: var(--border-radius);
+        padding: 0.35rem 0.8rem;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: var(--transition);
+        color: var(--secondary-color);
+        box-shadow: var(--shadow-sm);
+        height: 36px;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-glow);
+    }
+
+    /* Right side container */
+    .navbar-right {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 991.98px) {
+        .navbar-nav {
+            flex-direction: column !important;
+            gap: 0;
+            width: 100%;
+            margin-top: 0.8rem;
+        }
+
+        .nav-link {
+            margin: 0.15rem 0;
+            width: 100%;
+            text-align: center;
+            padding: 0.6rem 0.8rem !important;
+        }
+
+        .search-box {
+            margin: 0.8rem 0;
+            width: 100%;
+        }
+
+        .navbar-collapse {
+            text-align: center;
+        }
+
+        .navbar-right {
+            flex-direction: column;
+            width: 100%;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .auth-buttons-container {
+            margin-left: 0;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-outline-primary,
+        .btn-primary {
+            width: 100%;
+            justify-content: center;
+            margin: 0.1rem 0;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .navbar-expand-lg .navbar-nav {
+            flex-direction: row;
+        }
+        
+        .navbar-right {
+            flex-direction: row;
+        }
+    }
+</style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#" data-page="home">
+                <i class="fas fa-brain"></i> MindSpace
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"><i class="fas fa-bars" style="color: var(--primary-color);"></i></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-page="home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="discussion-rooms">Discussion Rooms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="explore">Explore</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="my-journey">My Journey</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="saved">Saved</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="about">About</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center">
+                    <input type="text" class="search-box" placeholder="Search...">
+                    <div class="nav-item dropdown ms-3">
+                        <a class="nav-link position-relative" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Notifications" aria-controls="notifications-menu">
+                            <i class="fas fa-bell" aria-hidden="true"></i>
+                            <span class="notification-badge" aria-hidden="true">3</span>
+                            <span class="visually-hidden" id="notif-count" aria-live="polite">3 new notifications</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" id="notifications-menu" role="menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Someone liked your post</a></li>
+                            <li><a class="dropdown-item" href="#">New reply to your question</a></li>
+                            <li><a class="dropdown-item" href="#">Weekly digest</a></li>
+                        </ul>
+                    </div>
+                    <div class="nav-item dropdown ms-3" id="user-menu">
+                        <a class="nav-link" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <img src="https://randomuser.me/api/portraits/lego/1.jpg" class="user-avatar" alt="User" id="user-avatar">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#" data-page="profile">Profile</a></li>
+                            <li><a class="dropdown-item" href="#" data-page="saved">Saved Posts</a></li>
+                            <li><a class="dropdown-item" href="#" data-page="my-journey">My Journey</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logout-btn">Logout</a></li>
+                        </ul>
+                    </div>
+                    <div id="auth-buttons" class="d-flex align-items-center ms-3" role="navigation" aria-label="Authentication">
+                        <button id="login-btn" type="button" class="btn btn-outline-primary" data-page="login">
+                            <i class="fas fa-sign-in-alt me-1" aria-hidden="true"></i> Login
+                        </button>
+                        <button id="signup-btn" type="button" class="btn btn-primary ms-2" data-page="signup">
+                            <i class="fas fa-user-plus me-1" aria-hidden="true"></i> Sign Up
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div id="main-content">
+        <!-- Page content will be loaded here -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="#" class="footer-link" data-page="about">About</a>
+                <a href="#" class="footer-link">Community Guidelines</a>
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact</a>
+            </div>
+            <div class="copyright">
+                &copy; 2023 MindSpace. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Create Post Modal -->
+    <div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createPostModalLabel">Share Your Story</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="create-post-form">
+                        <div class="mb-3">
+                            <label for="postTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="postTitle" placeholder="What's your problem or story?">
+                        </div>
+                        <div class="mb-3">
+                            <label for="postContent" class="form-label">Description</label>
+                            <textarea class="form-control" id="postContent" rows="5" placeholder="Tell us more about it..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postType" class="form-label">Post Type</label>
+                            <select class="form-select" id="postType">
+                                <option value="problem">Problem - I need help</option>
+                                <option value="journey">Journey - Sharing my experience</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postCategory" class="form-label">Category</label>
+                            <select class="form-select" id="postCategory">
+                                <option value="personal">Personal Issues</option>
+                                <option value="career">Career & Education</option>
+                                <option value="relationship">Relationship & Family</option>
+                                <option value="technology">Technology & Ideas</option>
+                                <option value="health">Health & Lifestyle</option>
+                                <option value="mental">Mental Support</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postTags" class="form-label">Tags</label>
+                            <input type="text" class="form-control" id="postTags" placeholder="Add tags separated by commas">
+                        </div>
+                        <div class="form-options">
+                            <div class="option-checkbox">
+                                <input type="checkbox" id="anonymousPost">
+                                <label for="anonymousPost">Post anonymously</label>
+                            </div>
+                            <div class="option-checkbox">
+                                <input type="checkbox" id="expertAdvice">
+                                <label for="expertAdvice">Request expert advice</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Post</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reply Modal -->
+    <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="replyModalLabel">Add a Reply</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="reply-form">
+                        <div class="mb-3">
+                            <textarea class="form-control" id="replyContent" rows="4" placeholder="Share your thoughts..."></textarea>
+                        </div>
+                        <div class="form-options">
+                            <div class="option-checkbox">
+                                <input type="checkbox" id="anonymousReply">
+                                <label for="anonymousReply">Reply anonymously</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Post Reply</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Room Modal -->
+    <div class="modal fade" id="createRoomModal" tabindex="-1" aria-labelledby="createRoomModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createRoomModalLabel">Create New Discussion Room</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="create-room-form">
+                        <div class="room-form-group">
+                            <label for="roomName" class="form-label">Room Name</label>
+                            <input type="text" class="form-control" id="roomName" placeholder="Enter room name" required>
+                        </div>
+                        <div class="room-form-group">
+                            <label for="roomDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="roomDescription" rows="3" placeholder="Describe the purpose of this room" required></textarea>
+                        </div>
+                        <div class="room-form-group">
+                            <label for="roomCategory" class="form-label">Category</label>
+                            <select class="form-select" id="roomCategory" required>
+                                <option value="">Select a category</option>
+                                <option value="technology">Technology</option>
+                                <option value="sports">Sports</option>
+                                <option value="finance">Finance</option>
+                                <option value="health">Health & Fitness</option>
+                                <option value="education">Education</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="room-form-group">
+                            <label for="roomIcon" class="form-label">Room Icon</label>
+                            <select class="form-select" id="roomIcon" required>
+                                <option value="">Select an icon</option>
+                                <option value="fas fa-laptop-code">💻 Technology</option>
+                                <option value="fas fa-futbol">⚽ Sports</option>
+                                <option value="fas fa-chart-line">💰 Finance</option>
+                                <option value="fas fa-heartbeat">💪 Health</option>
+                                <option value="fas fa-graduation-cap">🎓 Education</option>
+                                <option value="fas fa-film">🎬 Entertainment</option>
+                                <option value="fas fa-users">👥 General</option>
+                            </select>
+                        </div>
+                        <div class="room-form-group">
+                            <label for="roomPrivacy" class="form-label">Privacy</label>
+                            <select class="form-select" id="roomPrivacy" required>
+                                <option value="">Select privacy setting</option>
+                                <option value="public">Public - Anyone can join</option>
+                                <option value="private">Private - Invite only</option>
+                            </select>
+                        </div>
+                        <div class="room-form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="setReminder">
+                                <label class="form-check-label" for="setReminder">
+                                    Set reminder for this room
+                                </label>
+                            </div>
+                            
+                            <div id="reminderOptions" class="reminder-options" style="display: none;">
+                                <h6>Reminder Options</h6>
+                                <div class="reminder-option">
+                                    <input type="radio" id="reminderDaily" name="reminderFrequency" value="daily">
+                                    <label for="reminderDaily">Daily</label>
+                                </div>
+                                <div class="reminder-option">
+                                    <input type="radio" id="reminderWeekly" name="reminderFrequency" value="weekly">
+                                    <label for="reminderWeekly">Weekly</label>
+                                </div>
+                                <div class="reminder-option">
+                                    <input type="radio" id="reminderCustom" name="reminderFrequency" value="custom">
+                                    <label for="reminderCustom">Custom Date</label>
+                                </div>
+                                <div id="customDateContainer" style="display: none; margin-top: 1rem;">
+                                    <label for="customReminderDate" class="form-label">Select Date</label>
+                                    <input type="date" class="form-control" id="customReminderDate">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Create Room</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Application State
+        const state = {
+            currentUser: null,
+            isLoggedIn: false,
+            tempToken: localStorage.getItem('tempToken') || generateTempToken(),
+            savedPosts: JSON.parse(localStorage.getItem('savedPosts')) || [],
+            userReactions: JSON.parse(localStorage.getItem('userReactions')) || {},
+            currentPage: 'home',
+            currentFeed: 'mixed',
+            currentCategory: 'all',
+            userJourneys: JSON.parse(localStorage.getItem('userJourneys')) || [],
+            currentRoom: null,
+            userReminders: JSON.parse(localStorage.getItem('userReminders')) || [],
+            joinedRooms: JSON.parse(localStorage.getItem('joinedRooms')) || [],
+            customRooms: JSON.parse(localStorage.getItem('customRooms')) || {}
+        };
+
+        // Discussion Rooms Data
+        const discussionRooms = {
+            'technology': {
+                id: 'technology',
+                name: '💻 Technology Discussions',
+                description: 'Discuss programming, gadgets, AI, and all things tech',
+                icon: 'fas fa-laptop-code',
+                members: 1250,
+                posts: 342,
+                messages: [
+                    {
+                        id: 'msg1',
+                        sender: 'CodingNewbie',
+                        avatar: 'https://randomuser.me/api/portraits/men/22.jpg',
+                        content: 'Mai abhi coding start kar raha hoon. Konse language se start karun? Python ya JavaScript?',
+                        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+                        type: 'received'
+                    },
+                    {
+                        id: 'msg2',
+                        sender: 'PythonPro',
+                        avatar: 'https://randomuser.me/api/portraits/women/33.jpg',
+                        content: 'Python best hai beginners ke liye - easy syntax aur bahut powerful',
+                        timestamp: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+                        type: 'received'
+                    },
+                    {
+                        id: 'msg3',
+                        sender: 'WebDevExpert',
+                        avatar: 'https://randomuser.me/api/portraits/men/44.jpg',
+                        content: 'JavaScript bhi accha hai web development ke liye, but Python easier hai start karne ke liye',
+                        timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+                        type: 'received'
+                    }
+                ]
+            },
+            'sports': {
+                id: 'sports',
+                name: '⚽ Sports Talk',
+                description: 'Cricket, football, and all sports discussions',
+                icon: 'fas fa-futbol',
+                members: 890,
+                posts: 215,
+                messages: [
+                    {
+                        id: 'msg4',
+                        sender: 'CricketLover',
+                        avatar: 'https://randomuser.me/api/portraits/men/11.jpg',
+                        content: 'Apki favorite team kaun si hai is season? Koun si team trophy jeetegi according to you?',
+                        timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
+                        type: 'received'
+                    },
+                    {
+                        id: 'msg5',
+                        sender: 'CSK_Fan',
+                        avatar: 'https://randomuser.me/api/portraits/men/12.jpg',
+                        content: 'CSK hamesha strong rehti hai, Dhoni ki captaincy mein kuch bhi possible hai!',
+                        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+                        type: 'received'
+                    }
+                ]
+            },
+            'finance': {
+                id: 'finance',
+                name: '💰 Finance & Investment',
+                description: 'Stock market, mutual funds, and financial planning',
+                icon: 'fas fa-chart-line',
+                members: 745,
+                posts: 189,
+                messages: [
+                    {
+                        id: 'msg6',
+                        sender: 'InvestmentNewbie',
+                        avatar: 'https://randomuser.me/api/portraits/women/14.jpg',
+                        content: 'Mai naya hoon stock market mein. Kya karna chahiye? Direct stocks ya mutual funds?',
+                        timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
+                        type: 'received'
+                    },
+                    {
+                        id: 'msg7',
+                        sender: 'MarketExpert',
+                        avatar: 'https://randomuser.me/api/portraits/men/15.jpg',
+                        content: 'Pehle paper trading try karo, then small investments se start karo. Always do your own research!',
+                        timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
+                        type: 'received'
+                    }
+                ]
+            },
+            'health': {
+                id: 'health',
+                name: '💪 Health & Fitness',
+                description: 'Fitness, nutrition, and wellness discussions',
+                icon: 'fas fa-heartbeat',
+                members: 623,
+                posts: 156,
+                messages: [
+                    {
+                        id: 'msg8',
+                        sender: 'FitnessJourney',
+                        avatar: 'https://randomuser.me/api/portraits/women/16.jpg',
+                        content: '3 months mein 10kg lose karne ke liye kya karna hoga? Diet aur exercise dono mein suggestions chahiye.',
+                        timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
+                        type: 'received'
+                    },
+                    {
+                        id: 'msg9',
+                        sender: 'FitnessCoach',
+                        avatar: 'https://randomuser.me/api/portraits/men/17.jpg',
+                        content: 'Diet control sabse important hai. Intermittent fasting try karo aur daily 10k steps walk karo.',
+                        timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
+                        type: 'received'
+                    }
+                ]
+            }
+        };
+
+        // Generate temporary token for anonymous users
+        function generateTempToken() {
+            const token = 'temp_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('tempToken', token);
+            return token;
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                state.currentUser = JSON.parse(savedUser);
+                state.isLoggedIn = true;
+                updateAuthUI();
+            }
+
+            // Load initial page
+            loadPage(state.currentPage);
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Navbar scroll effect
+            const navbarEl = document.querySelector('.navbar');
+            if (navbarEl) {
+                const onScroll = () => {
+                    if (window.scrollY > 50) navbarEl.classList.add('navbar--scrolled');
+                    else navbarEl.classList.remove('navbar--scrolled');
+                };
+                window.addEventListener('scroll', onScroll, { passive: true });
+                onScroll();
+            }
+        });
+
+        // Set up all event listeners
+        function setupEventListeners() {
+            // Navigation
+            document.querySelectorAll('[data-page]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.getAttribute('data-page');
+                    loadPage(page);
+                    
+                    // Update active nav link
+                    document.querySelectorAll('.nav-link').forEach(navLink => {
+                        navLink.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+
+            // Feed filter buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.hasAttribute('data-feed')) {
+                    document.querySelectorAll('[data-feed]').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    state.currentFeed = e.target.getAttribute('data-feed');
+                    if (state.currentPage === 'home') {
+                        loadHomePage();
+                    }
+                }
+            });
+
+            // Category filters
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.category-item')) {
+                    const categoryItem = e.target.closest('.category-item');
+                    document.querySelectorAll('.category-item').forEach(item => item.classList.remove('active'));
+                    categoryItem.classList.add('active');
+                    state.currentCategory = categoryItem.getAttribute('data-category');
+                    if (state.currentPage === 'home' || state.currentPage === 'explore') {
+                        loadHomePage();
+                    }
+                }
+            });
+
+            // Create post form
+            const createPostForm = document.getElementById('create-post-form');
+            if (createPostForm) {
+                createPostForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    createPost();
+                });
+            }
+
+            // Reply form
+            const replyForm = document.getElementById('reply-form');
+            if (replyForm) {
+                replyForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    submitReply();
+                });
+            }
+
+            // Create room form
+            const createRoomForm = document.getElementById('create-room-form');
+            if (createRoomForm) {
+                createRoomForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    createRoom();
+                });
+            }
+
+            // Journey form
+            document.addEventListener('submit', function(e) {
+                if (e.target.id === 'journey-form') {
+                    e.preventDefault();
+                    saveJourney();
+                }
+            });
+
+            // Logout button
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    logoutUser();
+                });
+            }
+
+            // Search functionality
+            const searchBox = document.querySelector('.search-box');
+            if (searchBox) {
+                searchBox.addEventListener('keyup', function(e) {
+                    if (e.key === 'Enter') {
+                        performSearch(this.value);
+                    }
+                });
+            }
+
+            // Reminder options toggle
+            const setReminderCheckbox = document.getElementById('setReminder');
+            if (setReminderCheckbox) {
+                setReminderCheckbox.addEventListener('change', function() {
+                    const reminderOptions = document.getElementById('reminderOptions');
+                    if (this.checked) {
+                        reminderOptions.style.display = 'block';
+                    } else {
+                        reminderOptions.style.display = 'none';
+                    }
+                });
+            }
+
+            // Custom date option toggle
+            document.addEventListener('change', function(e) {
+                if (e.target.name === 'reminderFrequency') {
+                    const customDateContainer = document.getElementById('customDateContainer');
+                    if (e.target.value === 'custom') {
+                        customDateContainer.style.display = 'block';
+                    } else {
+                        customDateContainer.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // Load different pages
+        function loadPage(page) {
+            state.currentPage = page;
+            const mainContent = document.getElementById('main-content');
+            
+            switch(page) {
+                case 'home':
+                    loadHomePage();
+                    break;
+                case 'discussion-rooms':
+                    loadDiscussionRoomsPage();
+                    break;
+                case 'discussion-room':
+                    loadDiscussionRoomPage();
+                    break;
+                case 'explore':
+                    loadExplorePage();
+                    break;
+                case 'my-journey':
+                    loadMyJourneyPage();
+                    break;
+                case 'saved':
+                    loadSavedPage();
+                    break;
+                case 'about':
+                    loadAboutPage();
+                    break;
+                case 'profile':
+                    loadProfilePage();
+                    break;
+                case 'login':
+                    loadLoginPage();
+                    break;
+                case 'signup':
+                    loadSignupPage();
+                    break;
+                default:
+                    loadHomePage();
+            }
+        }
+
+        // Load Discussion Rooms Page
+        function loadDiscussionRoomsPage() {
+            const mainContent = document.getElementById('main-content');
+            
+            // Combine predefined rooms with custom rooms
+            const allRooms = {...discussionRooms, ...state.customRooms};
+            
+            mainContent.innerHTML = `
+                <!-- Rooms Header -->
+                <section class="room-header">
+                    <div class="container">
+                        <h1 class="hero-title">Discussion Rooms</h1>
+                        <p class="hero-subtitle">Join topic-specific rooms and engage in focused discussions with like-minded people</p>
+                        <div class="d-flex gap-3 justify-content-center mt-4">
+                            <button id="openCreateRoomBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createRoomModal" type="button">
+                                <i class="fas fa-plus me-2"></i> Create New Room
+                            </button>
+                            <button class="btn btn-outline-primary" id="backToHomeBtn" type="button">
+                                <i class="fas fa-home me-2"></i> Back to Home
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Reminders Section -->
+                ${state.userReminders.length > 0 ? `
+                <div class="container mt-4">
+                    <div class="reminder-section">
+                        <h3 class="section-title"><i class="fas fa-bell me-2"></i>Your Room Reminders</h3>
+                        ${state.userReminders.map(reminder => `
+                            <div class="reminder-item">
+                                <div class="reminder-info">
+                                    <div class="reminder-title">${reminder.title}</div>
+                                    <div class="reminder-time">${formatTime(reminder.dateTime)}</div>
+                                </div>
+                                <div class="reminder-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="enterRoom('${reminder.roomId}')">Join Room</button>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="removeReminder('${reminder.id}')">Dismiss</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                ` : ''}
+
+                <!-- Rooms Grid -->
+                <div class="container py-5">
+                    <div class="rooms-grid">
+                        ${Object.values(allRooms).map(room => {
+                            const isJoined = state.joinedRooms.includes(room.id);
+                            return `
+                                <div class="room-card" onclick="enterRoom('${room.id}')">
+                                    <div class="room-icon">
+                                        <i class="${room.icon}"></i>
+                                    </div>
+                                    <h3>${room.name}</h3>
+                                    <p class="text-muted">${room.description}</p>
+                                    <div class="room-stats">
+                                        <div class="room-stat">
+                                            <div class="room-stat-value">${room.members}</div>
+                                            <div class="room-stat-label">Members</div>
+                                        </div>
+                                        <div class="room-stat">
+                                            <div class="room-stat-value">${room.posts}</div>
+                                            <div class="room-stat-label">Posts</div>
+                                        </div>
+                                        <div class="room-stat">
+                                            <div class="room-stat-value">${room.messages ? room.messages.length : 0}</div>
+                                            <div class="room-stat-label">Messages</div>
+                                        </div>
+                                    </div>
+                                    <button class="btn ${isJoined ? 'join-btn joined' : 'join-btn'} mt-3" onclick="event.stopPropagation(); toggleJoinRoom('${room.id}')">
+                                        <i class="fas ${isJoined ? 'fa-check' : 'fa-user-plus'}"></i> ${isJoined ? 'Joined' : 'Join Room'}
+                                    </button>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // Add event listeners after DOM update
+            setTimeout(() => {
+                // Create Room button (select by stable ID)
+                const createRoomBtn = document.getElementById('openCreateRoomBtn');
+                if (createRoomBtn) {
+                    createRoomBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const modal = document.getElementById('createRoomModal');
+                        if (modal) {
+                            const bsModal = bootstrap.Modal.getOrCreateInstance(modal);
+                            bsModal.show();
+                        }
+                    });
+                }
+                
+                // Back to Home button
+                const backBtn = document.getElementById('backToHomeBtn');
+                if (backBtn) {
+                    backBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        loadPage('home');
+                    });
+                }
+            }, 50);
+        }
+
+        // Remove a reminder
+        function removeReminder(reminderId) {
+            state.userReminders = state.userReminders.filter(reminder => reminder.id !== reminderId);
+            localStorage.setItem('userReminders', JSON.stringify(state.userReminders));
+            loadDiscussionRoomsPage();
+            showAlert('Reminder removed', 'info');
+        }
+
+        // Toggle join room status
+        function toggleJoinRoom(roomId) {
+            const roomIndex = state.joinedRooms.indexOf(roomId);
+            
+            if (roomIndex === -1) {
+                // Join room
+                state.joinedRooms.push(roomId);
+                showAlert('Successfully joined the room!', 'success');
+                
+                // Add a reminder if user wants
+                if (confirm('Would you like to set a reminder to check this room regularly?')) {
+                    const newReminder = {
+                        id: `reminder_${Date.now()}`,
+                        title: `Check ${discussionRooms[roomId]?.name || state.customRooms[roomId]?.name} discussions`,
+                        dateTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // Tomorrow
+                        description: `Remember to check the room: ${discussionRooms[roomId]?.name || state.customRooms[roomId]?.name}`,
+                        roomId: roomId
+                    };
+                    
+                    state.userReminders.push(newReminder);
+                    localStorage.setItem('userReminders', JSON.stringify(state.userReminders));
+                    showAlert('Reminder set for tomorrow!', 'success');
+                }
+            } else {
+                // Leave room
+                state.joinedRooms.splice(roomIndex, 1);
+                showAlert('Left the room', 'info');
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('joinedRooms', JSON.stringify(state.joinedRooms));
+            
+            // Reload rooms page
+            loadDiscussionRoomsPage();
+        }
+
+        // Load Specific Discussion Room with WhatsApp Style Chat
+        function loadDiscussionRoomPage() {
+            if (!state.currentRoom) {
+                loadDiscussionRoomsPage();
+                return;
+            }
+
+            // Check if room exists in predefined or custom rooms
+            const room = discussionRooms[state.currentRoom] || state.customRooms[state.currentRoom];
+            if (!room) {
+                loadDiscussionRoomsPage();
+                return;
+            }
+
+            const mainContent = document.getElementById('main-content');
+            mainContent.innerHTML = `
+                <!-- Room Header -->
+                <section class="room-header">
+                    <div class="container">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h1 class="hero-title">${room.name}</h1>
+                                <p class="hero-subtitle">${room.description}</p>
+                            </div>
+                            <div class="d-flex gap-3">
+                                <button class="btn btn-outline-primary" id="roomBackToHomeBtn">
+                                    <i class="fas fa-home me-2"></i> Back to Home
+                                </button>
+                                <button class="btn btn-outline-primary" id="roomBackToRoomsBtn">
+                                    <i class="fas fa-arrow-left me-2"></i>Back to Rooms
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Room Content -->
+                <div class="room-content">
+                    <!-- WhatsApp Style Chat -->
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <div class="chat-header-info">
+                                <div class="room-icon" style="width: 40px; height: 40px;">
+                                    <i class="${room.icon}"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">${room.name}</h5>
+                                    <small class="text-muted">${room.members} members • ${room.messages ? room.messages.length : 0} messages</small>
+                                </div>
+                            </div>
+                            <div class="chat-header-actions">
+                                <button class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-users"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-messages" id="chat-messages">
+                            ${room.messages ? room.messages.map(message => `
+                                <div class="message ${message.type}">
+                                    <div class="message-bubble">
+                                        <div class="message-content">${message.content}</div>
+                                        <div class="message-info">
+                                            <span>${message.sender}</span>
+                                            <span>${formatTime(message.timestamp)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('') : '<div class="text-center py-4 text-muted">No messages yet. Be the first to start the conversation!</div>'}
+                        </div>
+                        
+                        <div class="chat-input">
+                            <input type="text" id="chat-input" placeholder="Type a message...">
+                            <button class="send-btn" onclick="sendMessage()">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Scroll to bottom of chat
+            setTimeout(() => {
+                const chatMessages = document.getElementById('chat-messages');
+                if (chatMessages) {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+                
+                // Add enter key listener for chat input
+                const chatInput = document.getElementById('chat-input');
+                if (chatInput) {
+                    chatInput.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            sendMessage();
+                        }
+                    });
+                }
+                
+                // Back to Home button in room
+                const backHomeBtn = document.getElementById('roomBackToHomeBtn');
+                if (backHomeBtn) {
+                    backHomeBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        loadPage('home');
+                    });
+                }
+                
+                // Back to Rooms button
+                const backRoomsBtn = document.getElementById('roomBackToRoomsBtn');
+                if (backRoomsBtn) {
+                    backRoomsBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        loadPage('discussion-rooms');
+                    });
+                }
+            }, 100);
+        }
+
+        // Send message in room
+        function sendMessage() {
+            const chatInput = document.getElementById('chat-input');
+            const message = chatInput.value.trim();
+            
+            if (!message) return;
+            
+            // Check if room exists in predefined or custom rooms
+            const room = discussionRooms[state.currentRoom] || state.customRooms[state.currentRoom];
+            if (!room) return;
+            
+            // Create new message
+            const newMessage = {
+                id: `msg_${Date.now()}`,
+                sender: state.isLoggedIn ? state.currentUser.name : 'You',
+                avatar: state.isLoggedIn ? state.currentUser.avatar : 'https://randomuser.me/api/portraits/lego/1.jpg',
+                content: message,
+                timestamp: new Date().toISOString(),
+                type: 'sent'
+            };
+            
+            // Initialize messages array if it doesn't exist
+            if (!room.messages) {
+                room.messages = [];
+            }
+            
+            // Add message to room
+            room.messages.push(newMessage);
+            
+            // Update room stats
+            room.posts = (room.posts || 0) + 1;
+            
+            // Save custom room if it's a custom room
+            if (state.customRooms[state.currentRoom]) {
+                state.customRooms[state.currentRoom] = room;
+                localStorage.setItem('customRooms', JSON.stringify(state.customRooms));
+            }
+            
+            // Clear input
+            chatInput.value = '';
+            
+            // Reload room page to show new message
+            loadDiscussionRoomPage();
+        }
+
+        // Enter a specific room
+        function enterRoom(roomId) {
+            state.currentRoom = roomId;
+            loadPage('discussion-room');
+        }
+
+        // Create new room
+        function createRoom() {
+            const name = document.getElementById('roomName').value;
+            const description = document.getElementById('roomDescription').value;
+            const category = document.getElementById('roomCategory').value;
+            const icon = document.getElementById('roomIcon').value;
+            const privacy = document.getElementById('roomPrivacy').value;
+            const setReminder = document.getElementById('setReminder').checked;
+            let reminderFrequency = null;
+            let customDate = null;
+
+            if (!name.trim() || !description.trim()) {
+                showAlert('Please fill in room name and description', 'warning');
+                return;
+            }
+
+            // Get reminder options if set
+            if (setReminder) {
+                const reminderOption = document.querySelector('input[name="reminderFrequency"]:checked');
+                if (reminderOption) {
+                    reminderFrequency = reminderOption.value;
+                    if (reminderFrequency === 'custom') {
+                        customDate = document.getElementById('customReminderDate').value;
+                        if (!customDate) {
+                            showAlert('Please select a custom date for the reminder', 'warning');
+                            return;
+                        }
+                    }
+                } else {
+                    showAlert('Please select a reminder frequency', 'warning');
+                    return;
+                }
+            }
+
+            // Create new room
+            const roomId = name.toLowerCase().replace(/\s+/g, '-');
+            const newRoom = {
+                id: roomId,
+                name: name,
+                description: description,
+                icon: icon,
+                category: category,
+                privacy: privacy,
+                members: 1,
+                posts: 0,
+                messages: []
+            };
+
+            // Add to custom rooms
+            state.customRooms[roomId] = newRoom;
+            localStorage.setItem('customRooms', JSON.stringify(state.customRooms));
+
+            // Set reminder if requested
+            if (setReminder) {
+                let reminderDateTime;
+                
+                if (reminderFrequency === 'daily') {
+                    reminderDateTime = new Date(Date.now() + 24 * 60 * 60 * 1000); // Tomorrow
+                } else if (reminderFrequency === 'weekly') {
+                    reminderDateTime = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // Next week
+                } else if (reminderFrequency === 'custom') {
+                    reminderDateTime = new Date(customDate);
+                }
+                
+                const newReminder = {
+                    id: `reminder_${Date.now()}`,
+                    title: `Check ${newRoom.name} discussions`,
+                    dateTime: reminderDateTime.toISOString(),
+                    description: `Remember to check the new room: ${newRoom.name}`,
+                    roomId: newRoom.id
+                };
+
+                state.userReminders.push(newReminder);
+                localStorage.setItem('userReminders', JSON.stringify(state.userReminders));
+            }
+
+            // Close modal and reset form
+            const modal = bootstrap.Modal.getInstance(document.getElementById('createRoomModal'));
+            modal.hide();
+            document.getElementById('create-room-form').reset();
+            document.getElementById('reminderOptions').style.display = 'none';
+            document.getElementById('customDateContainer').style.display = 'none';
+
+            // Reload rooms page
+            loadDiscussionRoomsPage();
+            
+            showAlert('Room created successfully!', 'success');
+        }
+
+        // Load home page
+        function loadHomePage() {
+            const mainContent = document.getElementById('main-content');
+            mainContent.innerHTML = `
+                <!-- Hero Section -->
+                <section class="hero-section">
+                    <div class="container">
+                        <h1 class="hero-title">Share Your Thoughts, Find Your Answers</h1>
+                        <p class="hero-subtitle">Join a community of thinkers, problem-solvers, and curious minds. Ask questions, share experiences, and discover solutions together.</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPostModal">Share Your Story</button>
+                    </div>
+                </section>
+
+                <!-- Main Content -->
+                <div class="container-main">
+                    <!-- Sidebar -->
+                    <div class="sidebar">
+                        <h3 class="section-title"><i class="fas fa-layer-group"></i> Categories</h3>
+                        <ul class="categories-list">
+                            <li class="category-item active" data-category="all">
+                                <i class="fas fa-fire"></i> Trending
+                            </li>
+                            <li class="category-item" data-category="personal">
+                                <i class="fas fa-user"></i> Personal Issues
+                            </li>
+                            <li class="category-item" data-category="career">
+                                <i class="fas fa-graduation-cap"></i> Career & Education
+                            </li>
+                            <li class="category-item" data-category="relationship">
+                                <i class="fas fa-heart"></i> Relationship & Family
+                            </li>
+                            <li class="category-item" data-category="technology">
+                                <i class="fas fa-laptop-code"></i> Technology & Ideas
+                            </li>
+                            <li class="category-item" data-category="health">
+                                <i class="fas fa-heartbeat"></i> Health & Lifestyle
+                            </li>
+                            <li class="category-item" data-category="mental">
+                                <i class="fas fa-head-side-virus"></i> Mental Support
+                            </li>
+                            <li class="category-item" data-category="expert">
+                                <i class="fas fa-star"></i> Expert Corner
+                            </li>
+                        </ul>
+                        
+                        <h3 class="section-title mt-4"><i class="fas fa-chart-line"></i> Trending Tags</h3>
+                        <div class="post-tags">
+                            <span class="tag">#anxiety</span>
+                            <span class="tag">#careeradvice</span>
+                            <span class="tag">#relationship</span>
+                            <span class="tag">#coding</span>
+                            <span class="tag">#mentalhealth</span>
+                            <span class="tag">#selfimprovement</span>
+                        </div>
+                        
+                        <h3 class="section-title mt-4"><i class="fas fa-users"></i> Community Stats</h3>
+                        <div class="stats">
+                            <div class="stat mb-2">
+                                <i class="fas fa-user-friends"></i> <span id="member-count">125,893</span> Members
+                            </div>
+                            <div class="stat mb-2">
+                                <i class="fas fa-comments"></i> <span id="discussion-count">542,107</span> Discussions
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-lightbulb"></i> <span id="solution-count">1,234,890</span> Solutions
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Content -->
+                    <div class="main-content">
+                        <!-- Feed Filters -->
+                        <div class="feed-filters mb-4">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-outline-primary ${state.currentFeed === 'mixed' ? 'active' : ''}" data-feed="mixed">Mixed Feed</button>
+                                <button type="button" class="btn btn-outline-primary ${state.currentFeed === 'random' ? 'active' : ''}" data-feed="random">Random</button>
+                                <button type="button" class="btn btn-outline-primary ${state.currentFeed === 'recommended' ? 'active' : ''}" data-feed="recommended">For You</button>
+                            </div>
+                        </div>
+
+                        <!-- Create Post -->
+                        <div class="create-post">
+                            <div class="user-info mb-3">
+                                <img src="${state.isLoggedIn ? state.currentUser.avatar : 'https://randomuser.me/api/portraits/lego/1.jpg'}" class="user-avatar" alt="User">
+                                <div>
+                                    <div class="username">${state.isLoggedIn ? state.currentUser.name : 'Anonymous User'}</div>
+                                    <div class="post-time">What's on your mind?</div>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-outline-primary w-100 py-3" data-bs-toggle="modal" data-bs-target="#createPostModal">
+                                <i class="fas fa-pen me-2"></i> Share your problem or journey...
+                            </button>
+                        </div>
+
+                        <!-- Posts Container -->
+                        <div id="posts-container">
+                            <!-- Posts will be loaded here dynamically -->
+                        </div>
+
+                        <!-- Loading Spinner -->
+                        <div id="loading-spinner" class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+
+                        <!-- Load More Button -->
+                        <div id="load-more-container" class="text-center mt-4 d-none">
+                            <button id="load-more-btn" class="btn btn-primary">Load More Posts</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Load posts after DOM is updated
+            setTimeout(() => {
+                loadPosts();
+                setupEventListeners(); // Reattach event listeners for new elements
+            }, 100);
+        }
+
+        // Load login page
+        function loadLoginPage() {
+            const mainContent = document.getElementById('main-content');
+            mainContent.innerHTML = `
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <h2><i class="fas fa-brain me-2"></i>Welcome Back</h2>
+                            <p class="mb-0">Sign in to continue your journey</p>
+                        </div>
+                        <div class="auth-body">
+                            <form id="login-form">
+                                <div class="mb-3">
+                                    <label for="loginEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="loginEmail" placeholder="Enter your email">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="loginPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password">
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 py-2">Login</button>
+                            </form>
+                            <div class="form-divider">
+                                <span>or</span>
+                            </div>
+                            <button class="btn btn-outline-primary w-100" id="anonymous-user-link">
+                                Continue as Anonymous User
+                            </button>
+                        </div>
+                        <div class="auth-footer">
+                            <p>Don't have an account? <a href="#" data-page="signup">Sign up</a></p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Add event listeners
+            document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                loginUser();
+            });
+
+            document.getElementById('anonymous-user-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                continueAsAnonymous();
+            });
+        }
+
+        // Load signup page
+        function loadSignupPage() {
+            const mainContent = document.getElementById('main-content');
+            mainContent.innerHTML = `
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <h2><i class="fas fa-brain me-2"></i>Join MindSpace</h2>
+                            <p class="mb-0">Create your account to get started</p>
+                        </div>
+                        <div class="auth-body">
+                            <form id="signup-form">
+                                <div class="mb-3">
+                                    <label for="signupName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="signupName" placeholder="Enter your full name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="signupEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="signupEmail" placeholder="Enter your email">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="signupPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="signupPassword" placeholder="Create a password">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="signupConfirmPassword" class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="signupConfirmPassword" placeholder="Confirm your password">
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 py-2">Create Account</button>
+                            </form>
+                        </div>
+                        <div class="auth-footer">
+                            <p>Already have an account? <a href="#" data-page="login">Login</a></p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Add event listeners
+            document.getElementById('signup-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                signupUser();
+            });
+        }
+
+        // Load My Journey page
+        function loadMyJourneyPage() {
+            if (!state.isLoggedIn) {
+                loadLoginPage();
+                showAlert('Please login to access your journey', 'warning');
+                return;
+            }
+
+            const mainContent = document.getElementById('main-content');
+            mainContent.innerHTML = `
+                <!-- Journey Header -->
+                <section class="journey-header">
+                    <div class="container">
+                        <h1 class="hero-title">My Journey</h1>
+                        <p class="hero-subtitle">Track your personal growth, document your experiences, and reflect on your progress</p>
+                    </div>
+                </section>
+
+                <!-- Journey Content -->
+                <div class="journey-form-container">
+                    <div class="journey-form">
+                        <form id="journey-form">
+                            <div class="form-section">
+                                <h3 class="form-section-title"><i class="fas fa-pen"></i> New Journey Entry</h3>
+                                <div class="mb-3">
+                                    <label for="journeyTitle" class="form-label">Title</label>
+                                    <input type="text" class="form-control" id="journeyTitle" placeholder="What's this entry about?">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="journeyDate" class="form-label">Date</label>
+                                    <input type="date" class="form-control" id="journeyDate">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="journeyCategory" class="form-label">Category</label>
+                                    <select class="form-select" id="journeyCategory">
+                                        <option value="personal-growth">Personal Growth</option>
+                                        <option value="career">Career Development</option>
+                                        <option value="health">Health & Wellness</option>
+                                        <option value="relationships">Relationships</option>
+                                        <option value="learning">Learning & Skills</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="journeyContent" class="form-label">Your Story</label>
+                                    <textarea class="form-control" id="journeyContent" rows="6" placeholder="Describe your experience, challenges, achievements, or reflections..."></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="journeyTags" class="form-label">Tags</label>
+                                    <input type="text" class="form-control" id="journeyTags" placeholder="Add tags separated by commas">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="journeyMood" class="form-label">How are you feeling?</label>
+                                    <select class="form-select" id="journeyMood">
+                                        <option value="excited">😊 Excited</option>
+                                        <option value="happy">😄 Happy</option>
+                                        <option value="neutral">😐 Neutral</option>
+                                        <option value="anxious">😰 Anxious</option>
+                                        <option value="sad">😔 Sad</option>
+                                        <option value="proud">🥰 Proud</option>
+                                        <option value="grateful">🙏 Grateful</option>
+                                    </select>
+                                </div>
+                                <div class="form-options">
+                                    <div class="option-checkbox">
+                                        <input type="checkbox" id="privateEntry">
+                                        <label for="privateEntry">Keep this entry private</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Entry</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="journey-timeline">
+                            <h3 class="form-section-title"><i class="fas fa-road"></i> Your Journey Timeline</h3>
+                            <div class="timeline-step">
+                                <div class="timeline-step-number">1</div>
+                                <div class="timeline-step-content">
+                                    <div class="timeline-step-title">Start Your Journey</div>
+                                    <div class="timeline-step-description">Create your first entry to begin documenting your personal growth journey.</div>
+                                </div>
+                            </div>
+                            <div class="timeline-step">
+                                <div class="timeline-step-number">2</div>
+                                <div class="timeline-step-content">
+                                    <div class="timeline-step-title">Track Progress</div>
+                                    <div class="timeline-step-description">Regularly update your journey to see how far you've come.</div>
+                                </div>
+                            </div>
+                            <div class="timeline-step">
+                                <div class="timeline-step-number">3</div>
+                                <div class="timeline-step-content">
+                                    <div class="timeline-step-title">Reflect & Grow</div>
+                                    <div class="timeline-step-description">Use your entries to reflect on challenges and celebrate achievements.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Previous Journey Entries -->
+                    <div class="mt-5">
+                        <h3 class="form-section-title"><i class="fas fa-history"></i> Previous Entries</h3>
+                        ${state.userJourneys.length > 0 ? `
+                            <div class="journey-cards">
+                                ${state.userJourneys.map(journey => `
+                                    <div class="journey-card">
+                                        <div class="journey-card-header">
+                                            <h4 class="journey-card-title">${journey.title}</h4>
+                                            <div class="journey-card-date">${formatTime(journey.date)}</div>
+                                        </div>
+                                        <div class="journey-card-content">
+                                            <p>${journey.content.substring(0, 150)}${journey.content.length > 150 ? '...' : ''}</p>
+                                        </div>
+                                        <div class="journey-card-tags">
+                                            ${journey.tags.map(tag => `<span class="journey-card-tag">#${tag}</span>`).join('')}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : `
+                            <div class="text-center py-5">
+                                <i class="fas fa-road fa-3x mb-3 text-muted"></i>
+                                <h4>No journey entries yet</h4>
+                                <p class="text-muted">Start documenting your journey by creating your first entry above.</p>
+                            </div>
+                        `}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load explore page
+        function loadExplorePage() {
+            const mainContent = document.getElementById('main-content');
+            mainContent.innerHTML = `
+                <div class="container py-5">
+                    <h1 class="text-center mb-5">Explore Categories</h1>
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <h3>Personal Issues</h3>
+                                    <p>Share and discuss personal challenges and experiences</p>
+                                    <button class="btn btn-primary" data-category="personal">Browse</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-graduation-cap"></i>
+                                    </div>
+                                    <h3>Career & Education</h3>
+                                    <p>Get advice on career paths, education, and professional growth</p>
+                                    <button class="btn btn-primary" data-category="career">Browse</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-heart"></i>
+                                    </div>
+                                    <h3>Relationship & Family</h3>
+                                    <p>Discuss relationships, family dynamics, and social connections</p>
+                                    <button class="btn btn-primary" data-category="relationship">Browse</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-laptop-code"></i>
+                                    </div>
+                                    <h3>Technology & Ideas</h3>
+                                    <p>Share tech insights, ideas, and innovation discussions</p>
+                                    <button class="btn btn-primary" data-category="technology">Browse</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-heartbeat"></i>
+                                    </div>
+                                    <h3>Health & Lifestyle</h3>
+                                    <p>Discuss health, wellness, fitness, and lifestyle choices</p>
+                                    <button class="btn btn-primary" data-category="health">Browse</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-head-side-virus"></i>
+                                    </div>
+                                    <h3>Mental Support</h3>
+                                    <p>Find support and share experiences about mental health</p>
+                                    <button class="btn btn-primary" data-category="mental">Browse</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Add event listeners to category buttons
+            setTimeout(() => {
+                document.querySelectorAll('[data-category]').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        state.currentCategory = this.getAttribute('data-category');
+                        loadHomePage();
+                    });
+                });
+            }, 100);
+        }
+
+        // Load saved posts page
+        function loadSavedPage() {
+            const mainContent = document.getElementById('main-content');
+            
+            if (!state.isLoggedIn) {
+                mainContent.innerHTML = `
+                    <div class="container py-5">
+                        <div class="text-center">
+                            <i class="fas fa-bookmark fa-3x mb-3 text-muted"></i>
+                            <h2>Save Posts to Access Them Later</h2>
+                            <p class="mb-4">Login to save posts and access them from any device</p>
+                            <button class="btn btn-primary" data-page="login">Login to Continue</button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const savedPosts = state.savedPosts;
+            
+            if (savedPosts.length === 0) {
+                mainContent.innerHTML = `
+                    <div class="container py-5">
+                        <div class="text-center">
+                            <i class="fas fa-bookmark fa-3x mb-3 text-muted"></i>
+                            <h2>No Saved Posts Yet</h2>
+                            <p class="mb-4">When you save posts, they will appear here</p>
+                            <button class="btn btn-primary" data-page="home">Explore Posts</button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            mainContent.innerHTML = `
+                <div class="container py-5">
+                    <h1 class="mb-4">Your Saved Posts</h1>
+                    <div class="saved-posts-container">
+                        ${savedPosts.map(post => `
+                            <div class="saved-post-card">
+                                <h4>${post.title}</h4>
+                                <p class="text-muted">${post.content.substring(0, 100)}...</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">${formatTime(post.created_at)}</small>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="unsavePost(${post.id})">
+                                        <i class="fas fa-trash"></i> Remove
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load about page
+        function loadAboutPage() {
+            const mainContent = document.getElementById('main-content');
+            mainContent.innerHTML = `
+                <div class="about-section">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto text-center">
+                                <h1 class="mb-4">About MindSpace</h1>
+                                <p class="lead mb-5">A safe community where people share their problems, find solutions, and support each other through life's challenges.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-5">
+                            <div class="col-md-4 mb-4">
+                                <div class="text-center">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+                                    <h3>Safe Space</h3>
+                                    <p>Share anonymously or with your identity. We prioritize your privacy and mental wellbeing.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="text-center">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <h3>Community Support</h3>
+                                    <p>Get advice and perspectives from people who've been through similar experiences.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="text-center">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <h3>Expert Advice</h3>
+                                    <p>Verified professionals provide guidance on specific topics when requested.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-5">
+                            <div class="col-lg-8 mx-auto">
+                                <h2 class="text-center mb-4">Our Mission</h2>
+                                <p>MindSpace was created to break the stigma around discussing personal problems and mental health. We believe that everyone goes through challenges, and sharing experiences can lead to healing, growth, and practical solutions.</p>
+                                <p>Whether you're dealing with anxiety, career decisions, relationship issues, or just need someone to listen, MindSpace provides a platform where your voice is heard and your feelings are validated.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load profile page
+        function loadProfilePage() {
+            if (!state.isLoggedIn) {
+                loadHomePage();
+                return;
+            }
+
+            const mainContent = document.getElementById('main-content');
+            const user = state.currentUser;
+            
+            mainContent.innerHTML = `
+                <div class="container py-5">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <img src="${user.avatar}" class="user-avatar mb-3" style="width: 100px; height: 100px;" alt="User">
+                                    <h3>${user.name}</h3>
+                                    <p class="text-muted">${user.email}</p>
+                                    <p>Member since ${new Date(user.joinDate).toLocaleDateString()}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="mb-4">Your Activity</h4>
+                                    <div class="row text-center">
+                                        <div class="col-4">
+                                            <h3>${user.postCount || 0}</h3>
+                                            <p class="text-muted">Posts</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <h3>${user.replyCount || 0}</h3>
+                                            <p class="text-muted">Replies</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <h3>${state.savedPosts.length}</h3>
+                                            <p class="text-muted">Saved</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card mt-4">
+                                <div class="card-body">
+                                    <h4 class="mb-4">Your Recent Posts</h4>
+                                    ${user.recentPosts && user.recentPosts.length > 0 ? 
+                                        user.recentPosts.map(post => `
+                                            <div class="border-bottom pb-3 mb-3">
+                                                <h5>${post.title}</h5>
+                                                <p class="text-muted">${post.content.substring(0, 100)}...</p>
+                                                <small class="text-muted">${formatTime(post.created_at)}</small>
+                                            </div>
+                                        `).join('') : 
+                                        '<p class="text-muted">You haven\'t created any posts yet.</p>'
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load posts from API or mock data
+        function loadPosts() {
+            const container = document.getElementById('posts-container');
+            const spinner = document.getElementById('loading-spinner');
+            
+            if (container) {
+                container.innerHTML = '';
+                spinner.classList.remove('d-none');
+                
+                // Simulate API call delay
+                setTimeout(() => {
+                    spinner.classList.add('d-none');
+                    
+                    // Filter posts by category if needed
+                    let postsToShow = window.mockPosts;
+                    if (state.currentCategory !== 'all') {
+                        postsToShow = window.mockPosts.filter(post => 
+                            post.category === state.currentCategory
+                        );
+                    }
+                    
+                    // Apply feed type filtering
+                    if (state.currentFeed === 'random') {
+                        postsToShow = [...postsToShow].sort(() => Math.random() - 0.5);
+                    } else if (state.currentFeed === 'recommended') {
+                        // In a real app, this would be based on user interests
+                        postsToShow = postsToShow.filter(post => 
+                            post.tags.some(tag => ['anxiety', 'mentalhealth', 'selfimprovement'].includes(tag))
+                        );
+                    }
+                    
+                    displayPosts(postsToShow);
+                }, 1000);
+            }
+        }
+
+        // Display posts in the container
+        function displayPosts(posts) {
+            const container = document.getElementById('posts-container');
+            
+            if (!container) return;
+            
+            if (posts.length === 0) {
+                container.innerHTML = `
+                    <div class="card">
+                        <div class="card-body text-center py-5">
+                            <i class="fas fa-inbox fa-3x mb-3 text-muted"></i>
+                            <h4>No posts found</h4>
+                            <p class="text-muted">Try changing your filters or be the first to post in this category!</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = posts.map(post => createPostElement(post)).join('');
+        }
+
+        // Create HTML for a single post
+        function createPostElement(post) {
+            const isSaved = state.savedPosts.some(p => p.id === post.id);
+            const userReaction = state.userReactions[post.id] || null;
+            
+            return `
+                <div class="post-card card">
+                    <div class="card-header">
+                        <div class="user-info">
+                            <img src="${post.author_avatar}" class="user-avatar" alt="User">
+                            <div>
+                                <div class="username">${post.author_display_name} 
+                                    ${post.hide_identity ? '<span class="badge badge-anonymous ms-2">Anonymous</span>' : ''}
+                                    ${post.is_expert ? '<span class="badge badge-expert ms-2">Expert</span>' : ''}
+                                </div>
+                                <div class="post-time">${formatTime(post.created_at)} • ${post.category_name}</div>
+                            </div>
+                        </div>
+                        ${post.is_trending ? '<span class="badge badge-trending">Trending</span>' : ''}
+                    </div>
+                    
+                    <div class="card-body">
+                        <h3 class="post-title">${post.title}</h3>
+                        <div class="question-bg">
+                            <p class="post-content">${post.description}</p>
+                        </div>
+                        
+                        ${post.tags && post.tags.length > 0 ? `
+                            <div class="post-tags">
+                                ${post.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}
+                            </div>
+                        ` : ''}
+                        
+                        ${post.has_poll ? `
+                            <div class="poll-section mt-3">
+                                <h5>${post.poll_question}</h5>
+                                <div class="poll-options">
+                                    ${post.poll_options.map((option, index) => `
+                                        <div class="poll-option">
+                                            <input type="radio" name="poll-${post.id}" id="option-${post.id}-${index}">
+                                            <label for="option-${post.id}-${index}">${option.text}</label>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <button class="btn btn-primary mt-2" onclick="voteOnPoll(${post.id})">Vote</button>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="post-stats">
+                            <div class="vote-buttons">
+                                <button class="vote-btn upvote-btn ${userReaction === 'up' ? 'active' : ''}" onclick="reactToPost(${post.id}, 'up')">
+                                    <i class="fas fa-arrow-up"></i>
+                                </button>
+                                <div class="vote-count">${post.reaction_count || 0}</div>
+                                <button class="vote-btn downvote-btn ${userReaction === 'down' ? 'active' : ''}" onclick="reactToPost(${post.id}, 'down')">
+                                    <i class="fas fa-arrow-down"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="stat">
+                                <i class="fas fa-comment"></i> ${post.reply_count || 0} comments
+                            </div>
+                            
+                            <div class="stat">
+                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#replyModal" onclick="setCurrentPost(${post.id})">
+                                    <i class="fas fa-reply"></i> Reply
+                                </button>
+                            </div>
+                            
+                            <div class="stat">
+                                <button class="btn btn-sm ${isSaved ? 'btn-primary' : 'btn-outline-primary'}" onclick="toggleSavePost(${post.id})">
+                                    <i class="fas fa-bookmark"></i> ${isSaved ? 'Saved' : 'Save'}
+                                </button>
+                            </div>
+                        </div>
+                        
+                        ${post.replies && post.replies.length > 0 ? `
+                            <div class="comments-section">
+                                <h6 class="mb-3">Recent Replies</h6>
+                                ${post.replies.slice(0, 2).map(reply => {
+                                    const replyReaction = state.userReactions[`reply-${reply.id}`] || null;
+                                    return `
+                                        <div class="reply-bg">
+                                            <div class="user-info mb-2">
+                                                <img src="${reply.author_avatar}" class="user-avatar" style="width: 30px; height: 30px;" alt="User">
+                                                <div>
+                                                    <div class="username">${reply.author_display_name}
+                                                        ${reply.hide_identity ? '<span class="badge badge-anonymous ms-2">Anonymous</span>' : ''}
+                                                    </div>
+                                                    <div class="post-time">${formatTime(reply.created_at)}</div>
+                                                </div>
+                                            </div>
+                                            <p class="mb-2">${reply.content}</p>
+                                            <div class="comment-actions">
+                                                <button class="comment-action helpful ${replyReaction === 'helpful' ? 'active' : ''}" onclick="reactToReply(${reply.id}, 'helpful')">
+                                                    <i class="fas fa-thumbs-up"></i> Helpful (${reply.helpful_count || 0})
+                                                </button>
+                                                <button class="comment-action not-satisfied ${replyReaction === 'not_satisfied' ? 'active' : ''}" onclick="reactToReply(${reply.id}, 'not_satisfied')">
+                                                    <i class="fas fa-thumbs-down"></i> Not Satisfied (${reply.not_satisfied_count || 0})
+                                                </button>
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                                ${post.reply_count > 2 ? `
+                                    <button class="btn btn-sm btn-outline-primary w-100 mt-2" onclick="viewPost(${post.id})">
+                                        View all ${post.reply_count} replies
+                                    </button>
+                                ` : ''}
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Format time for display
+        function formatTime(timestamp) {
+            const now = new Date();
+            const postTime = new Date(timestamp);
+            const diffMs = now - postTime;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+            
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins} min ago`;
+            if (diffHours < 24) return `${diffHours} hr ago`;
+            if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+            
+            return postTime.toLocaleDateString();
+        }
+
+        // Authentication functions
+        function loginUser() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Simple validation
+            if (!email || !password) {
+                showAlert('Please fill in all fields', 'danger');
+                return;
+            }
+            
+            // Simulate API call
+            setTimeout(() => {
+                const user = {
+                    id: 1,
+                    name: 'Ayan Ahamed',
+                    email: email,
+                    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+                    joinDate: new Date().toISOString(),
+                    postCount: 5,
+                    replyCount: 23
+                };
+                
+                state.currentUser = user;
+                state.isLoggedIn = true;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                
+                updateAuthUI();
+                
+                showAlert('Login successful!', 'success');
+                
+                // Redirect to home page
+                loadPage('home');
+            }, 1000);
+        }
+
+        function signupUser() {
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            
+            // Simple validation
+            if (!name || !email || !password || !confirmPassword) {
+                showAlert('Please fill in all fields', 'danger');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match', 'danger');
+                return;
+            }
+            
+            // Simulate API call
+            setTimeout(() => {
+                const user = {
+                    id: 1,
+                    name: name,
+                    email: email,
+                    avatar: 'https://randomuser.me/api/portraits/lego/1.jpg',
+                    joinDate: new Date().toISOString(),
+                    postCount: 0,
+                    replyCount: 0
+                };
+                
+                state.currentUser = user;
+                state.isLoggedIn = true;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                
+                updateAuthUI();
+                
+                showAlert('Account created successfully!', 'success');
+                
+                // Redirect to home page
+                loadPage('home');
+            }, 1000);
+        }
+
+        function continueAsAnonymous() {
+            showAlert('Continuing as anonymous user', 'info');
+            loadPage('home');
+        }
+
+        function logoutUser() {
+            state.currentUser = null;
+            state.isLoggedIn = false;
+            localStorage.removeItem('currentUser');
+            
+            updateAuthUI();
+            
+            showAlert('Logged out successfully', 'info');
+            
+            // Reload current page
+            loadPage('home');
+        }
+
+        function updateAuthUI() {
+            const userMenu = document.getElementById('user-menu');
+            const authButtons = document.getElementById('auth-buttons');
+            const userAvatar = document.getElementById('user-avatar');
+            
+            if (state.isLoggedIn && state.currentUser) {
+                if (userMenu) userMenu.classList.remove('d-none');
+                if (authButtons) authButtons.classList.add('d-none');
+                if (userAvatar) userAvatar.src = state.currentUser.avatar;
+            } else {
+                if (userMenu) userMenu.classList.add('d-none');
+                if (authButtons) authButtons.classList.remove('d-none');
+            }
+        }
+
+        // Journey functions
+        function saveJourney() {
+            const title = document.getElementById('journeyTitle').value;
+            const date = document.getElementById('journeyDate').value;
+            const category = document.getElementById('journeyCategory').value;
+            const content = document.getElementById('journeyContent').value;
+            const tags = document.getElementById('journeyTags').value;
+            const mood = document.getElementById('journeyMood').value;
+            const isPrivate = document.getElementById('privateEntry').checked;
+            
+            if (!title || !content) {
+                showAlert('Please fill in title and content', 'warning');
+                return;
+            }
+            
+            // Create new journey entry
+            const newJourney = {
+                id: Date.now(),
+                title: title,
+                date: date || new Date().toISOString().split('T')[0],
+                category: category,
+                content: content,
+                tags: tags.split(',').map(tag => tag.trim()).filter(tag => tag),
+                mood: mood,
+                isPrivate: isPrivate,
+                created_at: new Date().toISOString()
+            };
+            
+            // Add to user journeys
+            state.userJourneys.unshift(newJourney);
+            localStorage.setItem('userJourneys', JSON.stringify(state.userJourneys));
+            
+            // Reset form
+            document.getElementById('journey-form').reset();
+            
+            // Reload journey page
+            loadMyJourneyPage();
+            
+            showAlert('Journey entry saved successfully!', 'success');
+        }
+
+        // Post interaction functions
+        let currentPostId = null;
+
+        function setCurrentPost(postId) {
+            currentPostId = postId;
+        }
+
+        function createPost() {
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').value;
+            const category = document.getElementById('postCategory').value;
+            const tags = document.getElementById('postTags').value;
+            const isAnonymous = document.getElementById('anonymousPost').checked;
+            
+            if (!title || !content) {
+                showAlert('Please fill in title and content', 'warning');
+                return;
+            }
+            
+            // Create new post object
+            const newPost = {
+                id: Date.now(),
+                title: title,
+                description: content,
+                author_display_name: isAnonymous ? 'Anonymous' : (state.currentUser ? state.currentUser.name : 'Anonymous User'),
+                author_avatar: isAnonymous ? 'https://randomuser.me/api/portraits/lego/1.jpg' : (state.currentUser ? state.currentUser.avatar : 'https://randomuser.me/api/portraits/lego/1.jpg'),
+                created_at: new Date().toISOString(),
+                category: category,
+                category_name: document.getElementById('postCategory').options[document.getElementById('postCategory').selectedIndex].text,
+                tags: tags.split(',').map(tag => tag.trim()).filter(tag => tag),
+                hide_identity: isAnonymous,
+                is_expert: document.getElementById('expertAdvice').checked,
+                is_trending: false,
+                reaction_count: 0,
+                reply_count: 0,
+                replies: []
+            };
+            
+            // Add to mock posts
+            window.mockPosts.unshift(newPost);
+            
+            // Close modal and reset form
+            const modal = bootstrap.Modal.getInstance(document.getElementById('createPostModal'));
+            modal.hide();
+            document.getElementById('create-post-form').reset();
+            
+            // Reload posts
+            loadPosts();
+            
+            showAlert('Post created successfully!', 'success');
+        }
+
+        function submitReply() {
+            const content = document.getElementById('replyContent').value;
+            const isAnonymous = document.getElementById('anonymousReply').checked;
+            
+            if (!content.trim()) {
+                showAlert('Please enter a reply.', 'warning');
+                return;
+            }
+            
+            if (!currentPostId) {
+                showAlert('Error: No post selected', 'danger');
+                return;
+            }
+            
+            // Find the post
+            const post = window.mockPosts.find(p => p.id === currentPostId);
+            if (!post) {
+                showAlert('Error: Post not found', 'danger');
+                return;
+            }
+            
+            // Create new reply
+            const newReply = {
+                id: Date.now(),
+                author_display_name: isAnonymous ? 'Anonymous' : (state.currentUser ? state.currentUser.name : 'Anonymous User'),
+                author_avatar: isAnonymous ? 'https://randomuser.me/api/portraits/lego/1.jpg' : (state.currentUser ? state.currentUser.avatar : 'https://randomuser.me/api/portraits/lego/1.jpg'),
+                content: content,
+                created_at: new Date().toISOString(),
+                hide_identity: isAnonymous,
+                helpful_count: 0,
+                not_satisfied_count: 0
+            };
+            
+            // Add reply to post
+            if (!post.replies) post.replies = [];
+            post.replies.push(newReply);
+            post.reply_count = (post.reply_count || 0) + 1;
+            
+            // Close modal and reset form
+            const modal = bootstrap.Modal.getInstance(document.getElementById('replyModal'));
+            modal.hide();
+            document.getElementById('replyContent').value = '';
+            
+            // Reload posts
+            loadPosts();
+            
+            showAlert('Reply posted successfully!', 'success');
+        }
+
+        function reactToPost(postId, type) {
+            const post = window.mockPosts.find(p => p.id === postId);
+            if (!post) return;
+            
+            const currentReaction = state.userReactions[postId];
+            
+            // If clicking the same reaction, remove it
+            if (currentReaction === type) {
+                post.reaction_count = Math.max(0, (post.reaction_count || 0) - 1);
+                delete state.userReactions[postId];
+            } else {
+                // If switching from another reaction, adjust counts
+                if (currentReaction) {
+                    // Already was reacted, so we're changing reaction type
+                    // No need to adjust count since we're replacing one with another
+                } else {
+                    // New reaction
+                    post.reaction_count = (post.reaction_count || 0) + 1;
+                }
+                
+                state.userReactions[postId] = type;
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('userReactions', JSON.stringify(state.userReactions));
+            
+            // Reload posts to update UI
+            loadPosts();
+        }
+
+        function reactToReply(replyId, reaction) {
+            // Find the post containing this reply
+            let targetReply = null;
+            for (const post of window.mockPosts) {
+                if (post.replies) {
+                    targetReply = post.replies.find(r => r.id === replyId);
+                    if (targetReply) break;
+                }
+            }
+            
+            if (!targetReply) return;
+            
+            const reactionKey = `reply-${replyId}`;
+            const currentReaction = state.userReactions[reactionKey];
+            
+            // If clicking the same reaction, remove it
+            if (currentReaction === reaction) {
+                if (reaction === 'helpful') {
+                    targetReply.helpful_count = Math.max(0, (targetReply.helpful_count || 0) - 1);
+                } else {
+                    targetReply.not_satisfied_count = Math.max(0, (targetReply.not_satisfied_count || 0) - 1);
+                }
+                delete state.userReactions[reactionKey];
+            } else {
+                // If switching from another reaction, adjust counts
+                if (currentReaction) {
+                    if (currentReaction === 'helpful') {
+                        targetReply.helpful_count = Math.max(0, (targetReply.helpful_count || 0) - 1);
+                    } else {
+                        targetReply.not_satisfied_count = Math.max(0, (targetReply.not_satisfied_count || 0) - 1);
+                    }
+                }
+                
+                // Add new reaction
+                if (reaction === 'helpful') {
+                    targetReply.helpful_count = (targetReply.helpful_count || 0) + 1;
+                } else {
+                    targetReply.not_satisfied_count = (targetReply.not_satisfied_count || 0) + 1;
+                }
+                
+                state.userReactions[reactionKey] = reaction;
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('userReactions', JSON.stringify(state.userReactions));
+            
+            // Reload posts to update UI
+            loadPosts();
+        }
+
+        function toggleSavePost(postId) {
+            if (!state.isLoggedIn) {
+                showAlert('Please login to save posts', 'warning');
+                return;
+            }
+            
+            const post = window.mockPosts.find(p => p.id === postId);
+            if (!post) return;
+            
+            const isCurrentlySaved = state.savedPosts.some(p => p.id === postId);
+            
+            if (isCurrentlySaved) {
+                // Remove from saved
+                state.savedPosts = state.savedPosts.filter(p => p.id !== postId);
+                showAlert('Post removed from saved', 'info');
+            } else {
+                // Add to saved
+                state.savedPosts.push({
+                    id: post.id,
+                    title: post.title,
+                    content: post.description,
+                    created_at: post.created_at
+                });
+                showAlert('Post saved successfully!', 'success');
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('savedPosts', JSON.stringify(state.savedPosts));
+            
+            // Reload posts to update UI
+            loadPosts();
+        }
+
+        function unsavePost(postId) {
+            state.savedPosts = state.savedPosts.filter(p => p.id !== postId);
+            localStorage.setItem('savedPosts', JSON.stringify(state.savedPosts));
+            loadSavedPage();
+            showAlert('Post removed from saved', 'info');
+        }
+
+        function viewPost(postId) {
+            // In a real app, this would navigate to a post detail page
+            showAlert(`Viewing post ${postId} - This would open a detailed view in a real application`, 'info');
+        }
+
+        function voteOnPoll(postId) {
+            showAlert('Vote submitted!', 'success');
+        }
+
+        function performSearch(query) {
+            if (!query.trim()) return;
+            
+            // Filter posts by search query
+            const filteredPosts = window.mockPosts.filter(post => 
+                post.title.toLowerCase().includes(query.toLowerCase()) ||
+                post.description.toLowerCase().includes(query.toLowerCase()) ||
+                (post.tags && post.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase())))
+            );
+            
+            // Show search results
+            const mainContent = document.getElementById('main-content');
+            mainContent.innerHTML = `
+                <div class="container py-5">
+                    <h1 class="mb-4">Search Results for "${query}"</h1>
+                    <div id="posts-container">
+                        ${filteredPosts.length > 0 ? 
+                            filteredPosts.map(post => createPostElement(post)).join('') :
+                            '<div class="card"><div class="card-body text-center py-5"><i class="fas fa-search fa-3x mb-3 text-muted"></i><h4>No results found</h4><p class="text-muted">Try different keywords or browse our categories</p></div></div>'
+                        }
+                    </div>
+                </div>
+            `;
+        }
+
+        // Show alert message
+        function showAlert(message, type) {
+            // Remove existing alerts
+            document.querySelectorAll('.alert-dismissible').forEach(alert => {
+                alert.remove();
+            });
+            
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            alertDiv.style.top = '20px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '9999';
+            alertDiv.style.minWidth = '300px';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(alertDiv);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.parentNode.removeChild(alertDiv);
+                }
+            }, 5000);
+        }
+
+        // Mock data for demonstration
+        window.mockPosts = [
+            {
+                id: 1,
+                title: "How to deal with anxiety before important presentations?",
+                description: "I have a major presentation coming up at work next week, and every time I think about it, my heart starts racing and I feel like I can't breathe. I've tried practicing in front of a mirror, but it doesn't seem to help. Any advice from people who've been through this?",
+                author_display_name: "Alex Rivera",
+                author_avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+                created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+                category: "personal",
+                category_name: "Personal Issues",
+                tags: ["anxiety", "publicspeaking", "career"],
+                hide_identity: false,
+                is_expert: true,
+                is_trending: true,
+                reaction_count: 247,
+                reply_count: 42,
+                replies: [
+                    {
+                        id: 101,
+                        author_display_name: "Maya Chen",
+                        author_avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+                        content: "I used to have the same issue! What helped me was the 4-7-8 breathing technique: inhale for 4 seconds, hold for 7, exhale for 8. Do this 3-4 times right before you start.",
+                        created_at: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+                        hide_identity: false,
+                        helpful_count: 15,
+                        not_satisfied_count: 2
+                    },
+                    {
+                        id: 102,
+                        author_display_name: "David Kim",
+                        author_avatar: "https://randomuser.me/api/portraits/men/75.jpg",
+                        content: "As a public speaking coach, I recommend practicing in front of a small, supportive group first. Also, remember that your audience wants you to succeed - they're on your side!",
+                        created_at: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+                        hide_identity: false,
+                        is_expert: true,
+                        helpful_count: 28,
+                        not_satisfied_count: 1
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Struggling with work-life balance as a new parent",
+                description: "My partner and I just had our first baby 3 months ago, and I'm struggling to balance my demanding job with being present at home. I feel like I'm failing at both. How do other parents manage this?",
+                author_display_name: "Anonymous",
+                author_avatar: "https://randomuser.me/api/portraits/lego/1.jpg",
+                created_at: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
+                category: "relationship",
+                category_name: "Relationship & Family",
+                tags: ["parenting", "worklifebalance", "mentalhealth"],
+                hide_identity: true,
+                is_trending: false,
+                has_poll: true,
+                poll_question: "What helped you most with work-life balance?",
+                poll_options: [
+                    { id: 1, text: "Setting strict boundaries" },
+                    { id: 2, text: "Flexible work arrangements" },
+                    { id: 3, text: "Outsourcing household tasks" },
+                    { id: 4, text: "Better time management" }
+                ],
+                reaction_count: 189,
+                reply_count: 67,
+                replies: [
+                    {
+                        id: 201,
+                        author_display_name: "ParentingPro",
+                        author_avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+                        content: "The first few months are the hardest! Don't be too hard on yourself. What helped us was creating a shared calendar and taking shifts for baby duties.",
+                        created_at: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
+                        hide_identity: false,
+                        helpful_count: 22,
+                        not_satisfied_count: 0
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Career change at 35 - is it too late?",
+                description: "I've been in marketing for 12 years but I'm completely burned out. I've been learning web development for the past 6 months and really enjoy it. Is it too late to make a career switch at 35? I'm worried about starting from scratch.",
+                author_display_name: "Jordan Smith",
+                author_avatar: "https://randomuser.me/api/portraits/men/22.jpg",
+                created_at: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
+                category: "career",
+                category_name: "Career & Education",
+                tags: ["careerchange", "webdevelopment", "burnout"],
+                hide_identity: false,
+                is_trending: true,
+                reaction_count: 142,
+                reply_count: 38,
+                replies: [
+                    {
+                        id: 301,
+                        author_display_name: "TechCareerCoach",
+                        author_avatar: "https://randomuser.me/api/portraits/women/33.jpg",
+                        content: "It's never too late! I've helped people in their 40s and 50s successfully transition into tech. Your marketing experience is actually valuable - tech companies need people who understand users.",
+                        created_at: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
+                        hide_identity: false,
+                        is_expert: true,
+                        helpful_count: 31,
+                        not_satisfied_count: 2
+                    }
+                ]
+            }
+        ];
+    </script>
+</body> 
+</html>
