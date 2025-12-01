@@ -1,5 +1,6 @@
-whitenoise
 Django==5.0.6
-gunicorn
 djangorestframework
+gunicorn
+whitenoise
 psycopg2-binary
+drf-spectacular
