@@ -118,7 +118,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'qappdb',
         'USER': 'qappuser',
-        'PASSWORD': 'yourpassword',
+        'PASSWORD': 'qapppass',
         'HOST': 'localhost',
         'PORT': '5432',
     }
